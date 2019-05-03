@@ -6,7 +6,9 @@ module.exports = {
     //use query
     //use callback 
     get: function (callback) {
-      db.query('SELECT message FROM Messages', (err, results) => {
+      var queryString = 'select User.username, Messages.message, Room.roomname \
+                         from Messages left outer join User on (messages.userID = user.ID)';
+      db.query(queryString, (err, results) => {
         if (err) {
           callback(err);
         } else {
@@ -14,7 +16,7 @@ module.exports = {
         }
       })
     }, // a function which produces all the messages
-    post: function (callback) {
+    post: function (param, callback) {
     
 
     } // a function which can be used to insert a message into the database
@@ -23,7 +25,8 @@ module.exports = {
   users: {
     // Ditto as above.
     get: function (callback) {
-      db.query('SELECT username FROM User', (err, results) => {
+      var queryString = 'select User.username from User'
+      db.query(queryString, (err, results) => {
         if (err) {
           callback(err);
         } else {
